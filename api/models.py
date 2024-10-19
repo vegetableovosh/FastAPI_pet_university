@@ -3,7 +3,10 @@ import uuid
 from typing import Optional
 
 from fastapi import HTTPException
-from pydantic import BaseModel, EmailStr, validator, constr
+from pydantic import BaseModel
+from pydantic import constr
+from pydantic import EmailStr
+from pydantic import validator
 
 ##########################
 # BLOCK WITH API MODELS #
@@ -32,20 +35,16 @@ class UserCreate(BaseModel):
     surname: str
     email: EmailStr
 
-    @validator('name')
+    @validator("name")
     def validate_name(cls, value):
         if not LETTER_MATCH_PATTERN.match(value):
-            raise HTTPException(
-                status_code=422, detail="Name must be alphanumeric"
-            )
+            raise HTTPException(status_code=422, detail="Name must be alphanumeric")
         return value
 
-    @validator('surname')
+    @validator("surname")
     def validate_surname(cls, value):
         if not LETTER_MATCH_PATTERN.match(value):
-            raise HTTPException(
-                status_code=422, detail="Surname must be alphanumeric"
-            )
+            raise HTTPException(status_code=422, detail="Surname must be alphanumeric")
         return value
 
 
@@ -62,19 +61,14 @@ class UpdateUserRequest(BaseModel):
     surname: Optional[constr(min_length=1)]
     email: Optional[EmailStr]
 
-    @validator('name')
+    @validator("name")
     def validate_name(cls, value):
         if not LETTER_MATCH_PATTERN.match(value):
-            raise HTTPException(
-                status_code=422, detail="Name must be alphanumeric"
-            )
+            raise HTTPException(status_code=422, detail="Name must be alphanumeric")
         return value
 
-    @validator('surname')
+    @validator("surname")
     def validate_surname(cls, value):
         if not LETTER_MATCH_PATTERN.match(value):
-            raise HTTPException(
-                status_code=422, detail="Surname must be alphanumeric"
-            )
+            raise HTTPException(status_code=422, detail="Surname must be alphanumeric")
         return value
-

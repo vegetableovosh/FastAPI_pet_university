@@ -29,4 +29,3 @@ services:
 networks:
   custom:
     driver: bridge
-
