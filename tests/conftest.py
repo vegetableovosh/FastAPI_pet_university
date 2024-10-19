@@ -76,5 +76,13 @@ async def get_use_from_database(async_pool):
 
     return get_user_from_database_by_uuid
 
+@pytest.fixture
+async def create_user_in_database(async_pool):
+    async def create_user_database(user_id: str, name: str, surname: str, email: str, is_active: bool):
+        async with async_pool.acquire() as conn:
+            return await conn.execute("""INSERT INTO users VALUES($1, $2, $3, $4, $5);""",
+                                      user_id, name, surname, email, is_active)
+    return create_user_in_database
+
 
 
