@@ -1,6 +1,6 @@
 import json
 from uuid import uuid4
-
+from tests.conftest import create_test_auth_headers_for_user
 import pytest
 
 
@@ -148,6 +148,15 @@ async def test_update_user_check_one_is_updated(
     ],
 )
 async def test_update_user_not_found_error(client):
+    user_data = {
+        "user_id": uuid4(),
+        "name": "Nikolai",
+        "surname": "Sviridov",
+        "email": "lol@kek.com",
+        "is_active": True,
+        "hashed_password": "SampleHashedPass",
+    }
+    await create_user_in_database(**user_data)
     user_data_updated = {
         "name": "Ivan",
         "surname": "Ivanov",
