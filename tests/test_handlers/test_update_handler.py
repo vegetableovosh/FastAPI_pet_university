@@ -1,6 +1,6 @@
 import json
 from uuid import uuid4
-from tests.conftest import create_test_auth_headers_for_user
+
 import pytest
 
 
@@ -11,6 +11,8 @@ async def test_update_user(client, create_user_in_database, get_use_from_databas
         "surname": "Svirid",
         "email": "lol@kek.com",
         "is_active": True,
+        "hashed_password": "SampleHashedPass",
+        "roles": ["ROLE_PORTAL_USER"],
     }
     user_data_updated = {
         "name": "Misha",
@@ -42,6 +44,8 @@ async def test_update_user_check_one_is_updated(
         "surname": "Sviridov",
         "email": "lol@kek.com",
         "is_active": True,
+        "hashed_password": "SampleHashedPass",
+        "roles": ["ROLE_PORTAL_USER"],
     }
     user_data_2 = {
         "user_id": uuid4(),
@@ -49,6 +53,8 @@ async def test_update_user_check_one_is_updated(
         "surname": "Ivanov",
         "email": "ivan@kek.com",
         "is_active": True,
+        "hashed_password": "SampleHashedPass",
+        "roles": ["ROLE_PORTAL_USER"],
     }
     user_data_3 = {
         "user_id": uuid4(),
@@ -56,6 +62,8 @@ async def test_update_user_check_one_is_updated(
         "surname": "Petr",
         "email": "petr@kek.com",
         "is_active": True,
+        "hashed_password": "SampleHashedPass",
+        "roles": ["ROLE_PORTAL_USER"],
     }
     user_data_updated = {
         "name": "Nikifor",
@@ -147,7 +155,7 @@ async def test_update_user_check_one_is_updated(
         ),
     ],
 )
-async def test_update_user_not_found_error(client):
+async def test_update_user_not_found_error(client, create_user_in_database):
     user_data = {
         "user_id": uuid4(),
         "name": "Nikolai",
@@ -155,6 +163,7 @@ async def test_update_user_not_found_error(client):
         "email": "lol@kek.com",
         "is_active": True,
         "hashed_password": "SampleHashedPass",
+        "roles": ["ROLE_PORTAL_USER"],
     }
     await create_user_in_database(**user_data)
     user_data_updated = {
@@ -176,6 +185,8 @@ async def test_update_user_duplicate_email_error(client, create_user_in_database
         "surname": "Sviridov",
         "email": "lol@kek.com",
         "is_active": True,
+        "hashed_password": "SampleHashedPass",
+        "roles": ["ROLE_PORTAL_USER"],
     }
     user_data_2 = {
         "user_id": uuid4(),
@@ -183,6 +194,8 @@ async def test_update_user_duplicate_email_error(client, create_user_in_database
         "surname": "Ivanov",
         "email": "ivan@kek.com",
         "is_active": True,
+        "hashed_password": "SampleHashedPass",
+        "roles": ["ROLE_PORTAL_USER"],
     }
     user_data_updated = {
         "email": user_data_2["email"],
